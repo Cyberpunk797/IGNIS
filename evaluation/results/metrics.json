@@ -1,0 +1,48 @@
+{
+  "total_problems": 20,
+  "solved_count": 14,
+  "pass_at_1": 0.5,
+  "pass_at_2": 0.6,
+  "pass_at_3": 0.7,
+  "compilation_rate": 0.9,
+  "avg_tests_passed": 0.7,
+  "avg_reasoning_score": 0.98,
+  "avg_latency": 13.01,
+  "by_difficulty": {
+    "unknown": {
+      "count": 20,
+      "pass_at_1": 0.5,
+      "pass_at_2": 0.6,
+      "pass_at_3": 0.7
+    }
+  },
+  "by_topic": {
+    "arrays": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 1.0},
+    "sorting": {"count": 2, "pass_at_1": 0.0, "pass_at_2": 0.5, "pass_at_3": 0.5},
+    "difference_array": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "two_pointers": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "monotonic_stack": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "deque": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "intervals": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "bfs": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 0.0},
+    "topo_sort": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "trees": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 0.0},
+    "dsu": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 1.0},
+    "shortest_paths": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 0.0},
+    "fenwick": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "segment_tree": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "dp_1d": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "dp_2d": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "lis": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 0.0},
+    "bitmask": {"count": 1, "pass_at_1": 1.0, "pass_at_2": 1.0, "pass_at_3": 1.0},
+    "strings": {"count": 1, "pass_at_1": 0.0, "pass_at_2": 0.0, "pass_at_3": 0.0}
+  },
+  "by_task_type": {
+    "SFT_SOLVE": {
+      "count": 20,
+      "pass_at_1": 0.5,
+      "pass_at_2": 0.6,
+      "pass_at_3": 0.7
+    }
+  }
+}

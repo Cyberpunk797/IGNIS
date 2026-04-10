@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ignis | Competitive Programming Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void:#0B0B0B;--bg-deep:#111317;--bg-secondary:#14171C;--bg-card:#16181D;--bg-tertiary:#1C2027;
+      --bg-panel:rgba(22,24,29,.92);--border-color:#2A2F38;--border-gold:rgba(212,175,55,.28);
+      --gold:#D4AF37;--gold-bright:#FFD700;--gold-soft:rgba(212,175,55,.1);--gold-faint:rgba(255,215,0,.05);
+      --text-main:#EAEAEA;--text-secondary:#C8CFD8;--text-muted:#AEB6C2;--accent-error:#E15B64;--accent-warning:#D4AF37;
+      --success:#6FD39A;--warning:#E0A43C;--shadow:0 18px 40px rgba(0,0,0,.35);--radius-xl:24px;--radius-lg:18px;--radius-md:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0} html,body{min-height:100%}
+    body{font-family:'Inter',sans-serif;color:var(--text-main);overflow-x:hidden;background:radial-gradient(circle at 18% 12%, rgba(212,175,55,.09), transparent 24%),radial-gradient(circle at 85% 14%, rgba(255,215,0,.06), transparent 20%),linear-gradient(180deg,#0B0B0B 0%,#0E1014 100%)}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.75;background:radial-gradient(circle at 16% 24%, rgba(212,175,55,.18) 0 2px, transparent 3px),radial-gradient(circle at 72% 31%, rgba(212,175,55,.12) 0 2px, transparent 3px),radial-gradient(circle at 59% 76%, rgba(212,175,55,.14) 0 2px, transparent 3px),linear-gradient(120deg, transparent 0 48%, rgba(212,175,55,.05) 49%, transparent 50%),linear-gradient(90deg, transparent 0 25%, rgba(212,175,55,.035) 25.3%, transparent 25.6%),linear-gradient(0deg, transparent 0 70%, rgba(212,175,55,.03) 70.3%, transparent 70.6%)}
+    button,input,textarea{font:inherit}
+    .shell{min-height:100vh;padding:22px}.topbar{position:sticky;top:14px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 22px;margin-bottom:22px;background:rgba(17,19,23,.86);backdrop-filter:blur(14px);border:1px solid var(--border-color);border-radius:22px;box-shadow:var(--shadow)}
+    .brand{display:flex;align-items:center;gap:14px}.brand-icon{width:44px;height:44px;border-radius:14px;border:1px solid var(--border-gold);background:radial-gradient(circle at 35% 35%, rgba(255,215,0,.28), transparent 34%), linear-gradient(135deg, rgba(212,175,55,.12), rgba(255,215,0,.04));display:grid;place-items:center;box-shadow:0 0 20px rgba(212,175,55,.1)}
+    .brand-icon::before{content:"";width:20px;height:20px;border-radius:50%;border:2px solid var(--gold);box-shadow:10px -8px 0 -7px var(--gold), -12px 7px 0 -7px var(--gold-bright)}
+    .brand h1{font-size:1.15rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.brand p{color:var(--text-muted);font-size:.84rem}.brand .gold{color:var(--gold);text-shadow:0 0 18px rgba(212,175,55,.28)}
+    .nav{display:flex;gap:18px;flex-wrap:wrap}.nav-item{position:relative;color:var(--text-muted);font-size:.94rem}.nav-item.active{color:var(--text-main)}.nav-item.active::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 14px rgba(212,175,55,.3)}
+    .status{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.status-pill{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--border-color);background:rgba(255,255,255,.02);color:var(--text-muted);font-size:.84rem}.dot{width:9px;height:9px;border-radius:50%;background:var(--warning);box-shadow:0 0 10px rgba(212,175,55,.25)}.dot.active{background:var(--gold)} .dot.error{background:var(--accent-error);box-shadow:0 0 10px rgba(225,91,100,.3)}
+    .workspace{display:grid;grid-template-columns:290px minmax(0,1fr) 350px;gap:20px;min-height:calc(100vh - 146px)} .panel{background:var(--bg-panel);border:1px solid var(--border-color);border-radius:var(--radius-xl);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+    .sidebar,.results{padding:18px;display:flex;flex-direction:column;gap:16px;overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2,.panel-head h3{font-size:.96rem;letter-spacing:.08em;text-transform:uppercase}.note{color:var(--text-muted);font-size:.82rem}.chip{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.16);background:rgba(212,175,55,.08);color:var(--gold);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em}
+    .problem-list{display:flex;flex-direction:column;gap:12px;overflow:auto;padding-right:4px}.problem-card{text-align:left;padding:16px;border-radius:var(--radius-lg);border:1px solid var(--border-color);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent), var(--bg-card);color:var(--text-main);cursor:pointer;transition:.18s ease;position:relative;overflow:hidden}.problem-card:hover,.problem-card.active{transform:translateY(-2px);border-color:var(--border-gold);box-shadow:0 0 0 1px rgba(212,175,55,.12), 0 14px 30px rgba(0,0,0,.28)}.problem-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right, rgba(212,175,55,.12), transparent 34%);opacity:0;transition:.18s ease}.problem-card:hover::before,.problem-card.active::before{opacity:1}
+    .problem-row{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}.problem-title{font-weight:700;line-height:1.35}.badge{padding:6px 10px;border-radius:999px;font-size:.72rem;font-weight:700;text-transform:uppercase;white-space:nowrap}.difficulty-easy{color:#89d6a7;background:rgba(111,211,154,.12);border:1px solid rgba(111,211,154,.26)}.difficulty-medium{color:#efbc58;background:rgba(224,164,60,.12);border:1px solid rgba(224,164,60,.26)}.difficulty-hard{color:#ff8b8b;background:rgba(225,91,100,.12);border:1px solid rgba(225,91,100,.26)}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:5px 8px;border-radius:999px;border:1px solid var(--border-color);background:rgba(255,255,255,.02);color:var(--text-muted);font-size:.73rem}
+    .main{display:grid;grid-template-rows:auto 1fr;gap:18px;min-width:0}.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.8fr);gap:18px;padding:22px;border:1px solid var(--border-color);border-radius:var(--radius-xl);background:linear-gradient(135deg, rgba(212,175,55,.08), transparent 42%), rgba(17,19,23,.88);box-shadow:var(--shadow)}
+    .hero h2{margin-top:14px;font-size:clamp(1.6rem,2.8vw,2.25rem);line-height:1.08;max-width:13ch}.hero p{margin-top:14px;max-width:58ch;color:var(--text-secondary);line-height:1.65}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}.metric{padding:14px;border-radius:16px;border:1px solid var(--border-color);background:rgba(255,255,255,.02)}.metric span{display:block;color:var(--text-muted);font-size:.8rem;margin-bottom:8px}.metric strong{font-size:1.18rem}
+    .hero-net{position:relative;min-height:230px;border-radius:22px;border:1px solid rgba(212,175,55,.18);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent), #111318;overflow:hidden}.hero-net svg{position:absolute;inset:0;width:100%;height:100%}.hero-net .node{animation:pulse 2.8s ease-in-out infinite}.hero-net .node:nth-child(7){animation-delay:.5s}.hero-net .node:nth-child(8){animation-delay:1s}.hero-net .node:nth-child(9){animation-delay:1.4s}@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    .studio{display:grid;grid-template-columns:minmax(320px,.92fr) minmax(0,1.08fr);gap:18px;min-height:0}.problem-view,.editor-wrap{display:flex;flex-direction:column;min-height:0}.problem-view{padding:18px}.scroll{overflow:auto;padding-right:4px;display:flex;flex-direction:column;gap:16px}
+    .empty{padding:24px;border-radius:18px;border:1px dashed var(--border-color);color:var(--text-muted);background:rgba(255,255,255,.02);line-height:1.7}.problem-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.problem-header h2{font-size:1.45rem;line-height:1.14}.problem-rating{color:var(--gold);font-size:.88rem;white-space:nowrap}.statement{color:var(--text-secondary);line-height:1.74;white-space:pre-wrap}
+    .section{padding:16px;border-radius:16px;border:1px solid var(--border-color);background:rgba(255,255,255,.02)}.section h4{margin-bottom:10px;color:var(--gold);font-size:.88rem;text-transform:uppercase;letter-spacing:.08em}.section p,.section div{color:var(--text-secondary);line-height:1.7}.example{border-top:1px solid rgba(255,255,255,.05);padding-top:14px;margin-top:14px}.example:first-of-type{border-top:0;padding-top:0;margin-top:0}.example-header{margin-bottom:8px;font-weight:700;color:var(--text-main)}
+    .mono{font-family:'JetBrains Mono',monospace;font-size:.85rem}.mono span{color:var(--gold);margin-right:6px}.editor-wrap{padding:16px}.editor-shell{display:grid;grid-template-rows:auto auto 1fr;gap:14px;height:100%}.editor-head{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 18px;border-radius:18px;border:1px solid var(--border-color);background:rgba(255,255,255,.02)}.editor-head h3{font-size:1rem}.editor-sub{margin-top:4px;color:var(--text-muted);font-size:.84rem}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{min-height:42px;padding:0 16px;border-radius:12px;border:1px solid var(--border-color);background:rgba(255,255,255,.02);color:var(--text-main);font-weight:600;cursor:pointer;transition:.16s ease}.btn:hover{transform:translateY(-1px);border-color:var(--border-gold);box-shadow:0 12px 24px rgba(0,0,0,.25)}.btn:active{transform:scale(.985)}.btn-primary{border-color:rgba(212,175,55,.28);background:linear-gradient(180deg, rgba(212,175,55,.15), rgba(212,175,55,.08));color:var(--gold-bright)}.btn-ai{border-color:rgba(212,175,55,.38);background:rgba(212,175,55,.06);color:var(--gold)}.btn-secondary{color:var(--text-secondary)}
+    .loading-line{height:6px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.03);border:1px solid rgba(212,175,55,.08)}.loading-line::before{content:"";display:block;height:100%;background:linear-gradient(90deg, transparent, var(--gold), transparent);transform:translateX(-100%);animation:glide 2.8s linear infinite}@keyframes glide{to{transform:translateX(100%)}}
+    .codebox{position:relative;min-height:340px;border-radius:20px;border:1px solid rgba(212,175,55,.16);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent), #050505;overflow:hidden}.codebox::before{content:"";position:absolute;top:58px;bottom:0;left:0;width:48px;background:linear-gradient(180deg, rgba(212,175,55,.06), transparent), rgba(255,255,255,.012);border-right:1px solid rgba(212,175,55,.08)}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(212,175,55,.08);background:rgba(255,255,255,.02)}.filetab{padding:8px 12px;border-radius:12px;border:1px solid rgba(212,175,55,.15);background:rgba(212,175,55,.05);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.84rem}.hint{color:var(--text-muted);font-size:.8rem}
+    textarea{width:100%;height:calc(100% - 59px);padding:22px 22px 22px 66px;border:0;resize:none;outline:none;background:transparent;color:var(--text-main);font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.7;caret-color:var(--gold);tab-size:4}textarea::selection{background:rgba(212,175,55,.25)}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}.tab{padding:10px 14px;border-radius:999px;border:1px solid var(--border-color);background:rgba(255,255,255,.02);color:var(--text-muted);font-size:.84rem;font-weight:600;cursor:pointer}.tab.active{color:var(--gold);border-color:rgba(212,175,55,.3);box-shadow:inset 0 0 0 1px rgba(212,175,55,.1)}
+    .content{overflow:auto;padding-right:4px;display:flex;flex-direction:column;gap:14px}.card,.test{padding:16px;border-radius:16px;border:1px solid var(--border-color);background:rgba(255,255,255,.02)}.card{color:var(--text-muted);line-height:1.7}.test-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.test-name{font-weight:700}.status-badge{padding:6px 10px;border-radius:999px;font-size:.72rem;font-weight:700;text-transform:uppercase}.pass{background:rgba(111,211,154,.12);border:1px solid rgba(111,211,154,.28);color:var(--success)}.fail{background:rgba(225,91,100,.12);border:1px solid rgba(225,91,100,.28);color:var(--accent-error)}
+    .detail{display:grid;gap:6px;margin-top:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.02)}.detail span{color:var(--gold);font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.detail div,pre{white-space:pre-wrap;word-break:break-word}.summary{padding:16px;border-radius:16px;border:1px solid rgba(212,175,55,.18);background:rgba(212,175,55,.06)}.summary .ok,.summary .bad{font-weight:700;text-transform:uppercase;letter-spacing:.04em}.summary .ok{color:var(--gold-bright)}.summary .bad{color:var(--accent-error)}
+    .error-text{color:var(--accent-error)} .warning-text{color:var(--accent-warning)}.overlay{position:fixed;inset:0;background:rgba(4,4,6,.58);opacity:0;pointer-events:none;transition:.24s ease;z-index:29}.overlay.active{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;padding:16px;transform:translateX(100%);transition:.24s ease;z-index:30;pointer-events:none}.drawer.active{transform:translateX(0);pointer-events:auto}
+    .drawer-shell{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:14px;padding:18px;border-radius:24px;border:1px solid rgba(212,175,55,.16);background:linear-gradient(180deg, rgba(212,175,55,.08), transparent 22%), rgba(14,16,20,.97);box-shadow:0 18px 60px rgba(0,0,0,.45)}.drawer-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.drawer-title{display:flex;align-items:center;gap:12px}.ai-badge{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--gold);border:1px solid rgba(212,175,55,.22);background:rgba(212,175,55,.08)}
+    .feed{overflow:auto;display:flex;flex-direction:column;gap:14px;padding-right:4px}.ai-status{display:grid;place-items:center;gap:12px;text-align:center;min-height:180px;color:var(--text-secondary)}.spinner{width:46px;height:46px;border-radius:50%;border:2px solid rgba(212,175,55,.12);border-top-color:var(--gold);animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .solution h4{color:var(--gold);font-size:.86rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}.reasoning{padding:16px;border-radius:16px;border:1px solid var(--border-color);background:rgba(255,255,255,.02);color:var(--text-secondary);line-height:1.72;white-space:pre-wrap}.codepanel{border-radius:16px;border:1px solid rgba(212,175,55,.14);background:#060606;overflow:hidden}.codepanel .head{padding:12px 14px;border-bottom:1px solid rgba(212,175,55,.08);color:var(--text-muted);font-size:.82rem;font-family:'JetBrains Mono',monospace}.codepanel pre{margin:0;padding:16px;color:var(--text-main);font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:1.7;overflow:auto}
+    .close{width:40px;height:40px;border-radius:12px;border:1px solid var(--border-color);background:rgba(255,255,255,.03);color:var(--text-main);cursor:pointer}
+    @media (max-width:1280px){.workspace{grid-template-columns:260px minmax(0,1fr)}.results{grid-column:1 / -1}.workspace>.results{order:3}} @media (max-width:1080px){.workspace,.studio,.hero{grid-template-columns:1fr}.sidebar{order:2;max-height:420px}.main{order:1}.results{order:3}} @media (max-width:720px){.shell{padding:14px}.topbar{position:static;flex-direction:column;align-items:stretch}.nav,.status,.actions{justify-content:flex-start}.metrics{grid-template-columns:1fr}.problem-header,.editor-head{flex-direction:column;align-items:flex-start}textarea{padding-left:22px}.codebox::before{display:none}}
+  </style>
+</head>
+<body>
+  <div class="overlay" id="aiOverlay" onclick="closeAIDrawer()"></div>
+  <aside class="drawer" id="aiDrawer" aria-hidden="true">
+    <div class="drawer-shell">
+      <div class="drawer-head">
+        <div class="drawer-title"><div class="ai-badge">AI</div><div><h3>Ignis Solve</h3><p class="note">Neural guidance and verification</p></div></div>
+        <button class="close" type="button" onclick="closeAIDrawer()">X</button>
+      </div>
+      <div class="feed" id="modalBody"><div class="ai-status"><div class="spinner"></div><div>AI is standing by</div><div class="note">Select a problem and open the panel to generate a verified solution.</div></div></div>
+      <button class="btn btn-primary" id="useSolutionButton" type="button" style="display:none; width:100%;">Use This Solution</button>
+    </div>
+  </aside>
+
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon"></div><div><h1>I<span class="gold">gnis</span></h1><p>Competitive Programming Intelligence Engine</p></div></div>
+      <nav class="nav" aria-label="Primary"><span class="nav-item active">Problems</span><span class="nav-item">Explore</span><span class="nav-item">AI Solve</span><span class="nav-item">Submissions</span><span class="nav-item">Profile</span></nav>
+      <div class="status"><div class="status-pill"><span class="dot" id="compilerStatus"></span><span id="compilerText">Compiler</span></div><div class="status-pill"><span class="dot" id="aiStatus"></span><span id="aiText">AI Core</span></div></div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel sidebar">
+        <div class="panel-head"><div><h2>Problem Grid</h2><p class="note">Browse the active dataset</p></div><span class="chip" id="problemCountChip">0 loaded</span></div>
+        <div class="problem-list" id="problemList"></div>
+      </aside>
+
+      <section class="main">
+        <section class="hero">
+          <div><span class="chip">Ignis Dashboard</span><h2>Quiet power for focused competitive coding.</h2><p>A premium black-and-gold workspace built around problem context, code clarity, and AI-assisted verification. Neural circuit lines connect tasks, ideas, and solutions without distracting from the core loop.</p>
+            <div class="metrics"><div class="metric"><span>Loaded Problems</span><strong id="heroProblemCount">0</strong></div><div class="metric"><span>Active Problem</span><strong id="heroActiveProblem">None</strong></div><div class="metric"><span>Mode</span><strong>AI Studio</strong></div></div>
+          </div>
+          <div class="hero-net" aria-hidden="true"><svg viewBox="0 0 420 260" fill="none"><path d="M42 40L148 84L234 48L336 96" stroke="rgba(212,175,55,.35)" stroke-width="1.5"/><path d="M64 184L156 136L250 164L356 118" stroke="rgba(212,175,55,.28)" stroke-width="1.5"/><path d="M148 84L156 136" stroke="rgba(212,175,55,.2)" stroke-width="1.2"/><path d="M234 48L250 164" stroke="rgba(212,175,55,.18)" stroke-width="1.2"/><path d="M42 40C92 104 104 174 64 184" stroke="rgba(255,215,0,.14)" stroke-width="1.2"/><path d="M234 48C294 78 310 136 250 164" stroke="rgba(255,215,0,.16)" stroke-width="1.2"/><circle class="node" cx="42" cy="40" r="6" fill="#D4AF37"/><circle class="node" cx="148" cy="84" r="7" fill="#FFD700"/><circle class="node" cx="234" cy="48" r="6" fill="#D4AF37"/><circle class="node" cx="336" cy="96" r="5" fill="#D4AF37"/><circle class="node" cx="64" cy="184" r="5" fill="#FFD700"/><circle class="node" cx="156" cy="136" r="7" fill="#D4AF37"/><circle class="node" cx="250" cy="164" r="6" fill="#FFD700"/><circle class="node" cx="356" cy="118" r="5" fill="#D4AF37"/></svg></div>
+        </section>
+        <section class="studio">
+          <article class="panel problem-view">
+            <div class="panel-head" style="margin-bottom:14px;"><div><h3>Problem View</h3><p class="note">Statement, constraints, and examples</p></div><span class="chip" id="problemModeChip">Awaiting selection</span></div>
+            <div class="scroll" id="problemDescription"><div class="empty">Select a problem from the dashboard to open the full statement, examples, and coding workspace.</div></div>
+          </article>
+          <article class="panel editor-wrap">
+            <div class="editor-shell">
+              <div class="editor-head"><div><h3 id="currentProblemTitle">Ignis Editor</h3><p class="editor-sub">Pure-black editor with AI-assisted solve and verification</p></div><div class="actions"><button class="btn btn-secondary" type="button" onclick="runCode()">Run</button><button class="btn btn-primary" type="button" onclick="submitCode()">Submit</button><button class="btn btn-ai" type="button" onclick="askAI()">Ask AI</button></div></div>
+              <div class="loading-line" aria-hidden="true"></div>
+              <div class="codebox"><div class="toolbar"><div class="filetab">solution.cpp</div><div class="hint">Active line highlights with subtle gold tint</div></div><textarea id="codeEditor" spellcheck="false" placeholder="// Select a problem and start coding..."></textarea></div>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <aside class="panel results">
+        <div class="panel-head"><div><h3>Output Dock</h3><p class="note">Tests, results, and AI activity</p></div><span class="chip">Live</span></div>
+        <div class="tabs"><button class="tab active" type="button" data-tab="tests" onclick="showTab('tests', this)">Test Cases</button><button class="tab" type="button" data-tab="results" onclick="showTab('results', this)">Results</button></div>
+        <div class="content" id="outputContent"><div class="card">Run your code, submit a solution, or open the AI panel to start a guided solve.</div></div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    let currentProblem = null;
+    let problems = [];
+    let activeOutputTab = 'tests';
+    let latestAISolution = null;
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatMultiline(value) {
+      return escapeHtml(value).replace(/\n/g, '<br>');
+    }
+
+    function editorTemplate(title) {
+      return `#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    // Solve: ${title}\n\n    return 0;\n}`;
+    }
+
+    async function loadProblems() {
+      try {
+        const response = await fetch('/api/problems');
+        problems = await response.json();
+        renderProblemList();
+        document.getElementById('problemCountChip').textContent = `${problems.length} loaded`;
+        document.getElementById('heroProblemCount').textContent = String(problems.length);
+      } catch (error) {
+        console.error('Failed to load problems:', error);
+        document.getElementById('problemList').innerHTML = '<div class="card">Unable to load the problem dataset right now.</div>';
+      }
+    }
+
+    function renderProblemList() {
+      const list = document.getElementById('problemList');
+      if (!problems.length) {
+        list.innerHTML = '<div class="card">No problems are available in the current dataset.</div>';
+        return;
+      }
+      list.innerHTML = problems.map((problem) => `
+        <button class="problem-card ${currentProblem && currentProblem.id === problem.id ? 'active' : ''}" type="button" onclick="selectProblem('${String(problem.id).replace(/'/g, "\\'")}')">
+          <div class="problem-row">
+            <div class="problem-title">${escapeHtml(problem.title)}</div>
+            <span class="badge difficulty-${escapeHtml(problem.difficulty.toLowerCase())}">${escapeHtml(problem.difficulty)}</span>
+          </div>
+          <div class="tags">${(problem.tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
+        </button>
+      `).join('');
+    }
+
+    function selectProblem(id) {
+      currentProblem = problems.find((problem) => String(problem.id) === String(id)) || null;
+      latestAISolution = null;
+      document.getElementById('useSolutionButton').style.display = 'none';
+      renderProblemList();
+      if (!currentProblem) return;
+      document.getElementById('currentProblemTitle').textContent = currentProblem.title;
+      document.getElementById('heroActiveProblem').textContent = currentProblem.title;
+      document.getElementById('problemModeChip').textContent = currentProblem.task_type || 'SFT_SOLVE';
+      document.getElementById('codeEditor').value = editorTemplate(currentProblem.title);
+      renderProblemDescription();
+      renderExamplesPanel();
+    }
+
+    function renderProblemDescription() {
+      if (!currentProblem) return;
+      const examples = Array.isArray(currentProblem.examples) ? currentProblem.examples : [];
+      const tags = Array.isArray(currentProblem.tags) ? currentProblem.tags : [];
+      document.getElementById('problemDescription').innerHTML = `
+        <div class="problem-header">
+          <div>
+            <h2>${escapeHtml(currentProblem.title)}</h2>
+            <div class="tags" style="margin-top:12px;">
+              <span class="badge difficulty-${escapeHtml(currentProblem.difficulty.toLowerCase())}">${escapeHtml(currentProblem.difficulty)}</span>
+              ${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+            </div>
+          </div>
+          <div class="problem-rating">Rating ${escapeHtml(currentProblem.rating ?? 'N/A')}</div>
+        </div>
+        <p class="statement">${escapeHtml(currentProblem.statement || 'No statement available.')}</p>
+        <div class="section"><h4>Input Format</h4><p>${escapeHtml(currentProblem.input_format || 'Not specified')}</p></div>
+        <div class="section"><h4>Output Format</h4><p>${escapeHtml(currentProblem.output_format || 'Not specified')}</p></div>
+        <div class="section"><h4>Constraints</h4><p>${escapeHtml(currentProblem.constraints || 'Not specified')}</p></div>
+        <div class="section"><h4>Examples</h4>
+          ${examples.length ? examples.map((example, index) => `
+            <div class="example">
+              <div class="example-header">Example ${index + 1}</div>
+              <div class="mono"><div><span>Input</span>${formatMultiline(example.input || '(empty)')}</div><div><span>Output</span>${formatMultiline(example.output || '(empty)')}</div></div>
+            </div>
+          `).join('') : '<p>No examples available.</p>'}
+        </div>`;
+    }
+
+    function renderExamplesPanel() {
+      if (!currentProblem || activeOutputTab !== 'tests') return;
+      const examples = Array.isArray(currentProblem.examples) ? currentProblem.examples : [];
+      const output = document.getElementById('outputContent');
+      if (!examples.length) {
+        output.innerHTML = '<div class="card">This problem has no sample cases available.</div>';
+        return;
+      }
+      output.innerHTML = examples.map((example, index) => `
+        <div class="test">
+          <div class="test-head"><span class="test-name">Sample ${index + 1}</span><span class="status-badge pass">Ready</span></div>
+          <div class="detail"><span>Input</span><div>${formatMultiline(example.input || '(empty)')}</div></div>
+          <div class="detail"><span>Expected</span><div>${formatMultiline(example.output || '(empty)')}</div></div>
+        </div>
+      `).join('');
+    }
+
+    async function runCode() {
+      if (!currentProblem) { alert('Please select a problem first'); return; }
+      const code = document.getElementById('codeEditor').value.trim();
+      if (!code) {
+        document.getElementById('outputContent').innerHTML = '<div class="test"><div class="test-head"><span class="test-name">No Code Written</span><span class="status-badge fail">Fail</span></div><pre class="warning-text">Please write your C++ solution before running.</pre></div>';
+        return;
+      }
+      try {
+        const response = await fetch('/api/run', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code, test_cases: currentProblem.examples || [] }) });
+        const result = await response.json();
+        setActiveTab('results');
+        renderTestResults(result);
+      } catch (error) {
+        console.error('Run failed:', error);
+        document.getElementById('outputContent').innerHTML = '<div class="test"><div class="test-head"><span class="test-name">Execution Error</span><span class="status-badge fail">Fail</span></div><pre class="error-text">Unable to reach the backend run endpoint.</pre></div>';
+      }
+    }
+    async function submitCode() { await runCode(); }
+
+    function renderTestResults(result) {
+      const output = document.getElementById('outputContent');
+      if (!result || (!result.success && result.error)) {
+        output.innerHTML = `<div class="test"><div class="test-head"><span class="test-name">Error</span><span class="status-badge fail">Fail</span></div><pre class="error-text">${escapeHtml(result?.error || 'Unknown error')}</pre></div>`;
+        return;
+      }
+      if (!result.compiled) {
+        output.innerHTML = `<div class="test"><div class="test-head"><span class="test-name">Compilation Error</span><span class="status-badge fail">Fail</span></div><pre class="error-text">${escapeHtml(result.error || result.compile_error || 'Compilation failed')}</pre></div>`;
+        return;
+      }
+      const testsHtml = (result.results || []).map((test) => `
+        <div class="test">
+          <div class="test-head"><span class="test-name">Test Case ${escapeHtml(test.test_id)}</span><span class="status-badge ${test.passed ? 'pass' : 'fail'}">${test.passed ? 'Pass' : 'Fail'}</span></div>
+          <div class="detail"><span>Expected</span><div>${formatMultiline(test.expected || '(empty)')}</div></div>
+          <div class="detail"><span>Actual</span><div>${formatMultiline(test.actual || '(no output)')}</div></div>
+          ${test.error ? `<div class="detail"><span>Error</span><div class="error-text">${formatMultiline(test.error)}</div></div>` : ''}
+        </div>`).join('');
+      output.innerHTML = `${testsHtml}<div class="summary"><div class="${result.passed === result.total ? 'ok' : 'bad'}">${escapeHtml(result.passed)}/${escapeHtml(result.total)} tests passed</div></div>`;
+    }
+
+    function openAIDrawer() {
+      document.getElementById('aiDrawer').classList.add('active');
+      document.getElementById('aiOverlay').classList.add('active');
+      document.getElementById('aiDrawer').setAttribute('aria-hidden', 'false');
+    }
+
+    function closeAIDrawer() {
+      document.getElementById('aiDrawer').classList.remove('active');
+      document.getElementById('aiOverlay').classList.remove('active');
+      document.getElementById('aiDrawer').setAttribute('aria-hidden', 'true');
+    }
+
+    async function askAI() {
+      if (!currentProblem) { alert('Please select a problem first'); return; }
+      latestAISolution = null;
+      document.getElementById('useSolutionButton').style.display = 'none';
+      openAIDrawer();
+      document.getElementById('modalBody').innerHTML = '<div class="ai-status"><div class="spinner"></div><div>Ignis is solving...</div><div class="note">Running structured reasoning and self-verification.</div></div>';
+      try {
+        const response = await fetch('/api/ask-ai', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ problem: { title: currentProblem.title, statement: currentProblem.statement, input_spec: currentProblem.input_format, output_spec: currentProblem.output_format, constraints: currentProblem.constraints, samples: currentProblem.examples } })
+        });
+        const result = await response.json();
+        renderAIResult(result);
+      } catch (error) {
+        document.getElementById('modalBody').innerHTML = '<div class="ai-status"><div class="warning-text" style="font-size:2.4rem;">!</div><div>Connection Error</div><div class="note">Please check whether LM Studio is running and reachable.</div></div>';
+      }
+    }
+
+    function renderAIResult(result) {
+      const body = document.getElementById('modalBody');
+      const useButton = document.getElementById('useSolutionButton');
+      latestAISolution = result.code || '';
+      useButton.style.display = latestAISolution ? 'inline-flex' : 'none';
+      if (result.success) {
+        body.innerHTML = `
+          <div class="solution">
+            <h4>Reasoning</h4>
+            <div class="reasoning">${escapeHtml(result.reasoning || 'The solution uses an efficient algorithm to solve the problem.')}</div>
+          </div>
+          <div class="solution">
+            <h4>Solution</h4>
+            <div class="codepanel"><div class="head">solution.cpp</div><pre>${escapeHtml(result.code || '')}</pre></div>
+          </div>
+          <div class="solution">
+            <h4>Verification</h4>
+            <div class="summary"><div class="ok">All ${escapeHtml(result.tests_passed)} sample tests passed in ${escapeHtml(result.attempts)} attempt${result.attempts > 1 ? 's' : ''}</div></div>
+          </div>`;
+      } else {
+        body.innerHTML = `
+          <div class="ai-status" style="min-height:auto;justify-items:stretch;text-align:left;">
+            <div class="warning-text" style="font-size:2.4rem;text-align:center;">!</div>
+            <div style="text-align:center;">Solution not verified</div>
+            <div class="note" style="text-align:center;">The AI could not confirm a working solution after ${escapeHtml(result.attempts)} attempts.</div>
+          </div>
+          ${result.code ? `<div class="solution"><h4>Best Attempt</h4><div class="codepanel"><div class="head">solution.cpp</div><pre>${escapeHtml(result.code)}</pre></div></div>` : ''}`;
+      }
+    }
+
+    function useLatestSolution() {
+      if (!latestAISolution) return;
+      document.getElementById('codeEditor').value = latestAISolution;
+      closeAIDrawer();
+      runCode();
+    }
+
+    function setActiveTab(tabName) {
+      activeOutputTab = tabName;
+      document.querySelectorAll('.tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.tab === tabName));
+    }
+
+    function showTab(tabName, element) {
+      setActiveTab(tabName);
+      if (tabName === 'tests') {
+        renderExamplesPanel();
+      } else if (!document.getElementById('outputContent').innerHTML.trim()) {
+        document.getElementById('outputContent').innerHTML = '<div class="card">Run your code to see execution results here.</div>';
+      }
+      if (element) element.blur();
+    }
+
+    async function checkHealth() {
+      try {
+        const response = await fetch('/api/health');
+        const health = await response.json();
+        const compilerDot = document.getElementById('compilerStatus');
+        const compilerText = document.getElementById('compilerText');
+        const aiDot = document.getElementById('aiStatus');
+        const aiText = document.getElementById('aiText');
+        if (health.compiler.available) {
+          compilerDot.className = 'dot active';
+          compilerText.textContent = 'g++ Ready';
+        } else {
+          compilerDot.className = 'dot error';
+          compilerText.textContent = 'No Compiler';
+        }
+        if (health.ai.connected) {
+          aiDot.className = 'dot active';
+          aiText.textContent = 'AI Ready';
+        } else {
+          aiDot.className = 'dot';
+          aiText.textContent = 'AI Offline';
+        }
+      } catch (error) {
+        console.error('Health check failed:', error);
+      }
+    }
+
+    document.getElementById('useSolutionButton').addEventListener('click', useLatestSolution);
+    loadProblems();
+    checkHealth();
+    setInterval(checkHealth, 10000);
+  </script>
+</body>
+</html>

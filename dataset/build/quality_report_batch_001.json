@@ -1,0 +1,372 @@
+[
+  {
+    "id": "azcp_p001_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.96,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p002_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p003_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p004_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p005_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.96,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p006_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p007_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p008_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p009_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p010_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p011_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p012_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p013_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p014_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p015_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p016_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p017_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p018_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.95,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p019_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.9,
+    "notes": [
+      "short explanation"
+    ]
+  },
+  {
+    "id": "azcp_p020_sft_solve",
+    "task_type": "SFT_SOLVE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.95,
+    "notes": []
+  },
+  {
+    "id": "azcp_p021_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p022_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p023_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.9,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p024_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p025_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.9,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p026_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p027_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p028_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p029_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.9,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p030_plan_only",
+    "task_type": "PLAN_ONLY",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.75,
+    "notes": []
+  },
+  {
+    "id": "azcp_p001_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p003_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p004_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p005_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.9,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p006_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p007_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p008_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p009_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p010_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p013_repair",
+    "task_type": "REPAIR",
+    "declared_quality_score": 0.91,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p001_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p003_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p004_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p006_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p007_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p008_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.92,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p011_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p013_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.94,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p014_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  },
+  {
+    "id": "azcp_p020_optimize",
+    "task_type": "OPTIMIZE",
+    "declared_quality_score": 0.93,
+    "heuristic_quality_score": 0.65,
+    "notes": []
+  }
+]

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Compiler - LeetCode Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: #2d2d2d;
+            padding: 15px 20px;
+            border-bottom: 1px solid #3e3e3e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #569cd6;
+            font-size: 1.2rem;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ec9b0;
+        }
+        
+        .main-container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #3e3e3e;
+        }
+        
+        .problem-section {
+            padding: 20px;
+            border-bottom: 1px solid #3e3e3e;
+            max-height: 30vh;
+            overflow-y: auto;
+        }
+        
+        .problem-title {
+            color: #4ec9b0;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .problem-content {
+            line-height: 1.6;
+        }
+        
+        .problem-content h3 {
+            color: #9cdcfe;
+            margin: 15px 0 10px;
+            font-size: 1rem;
+        }
+        
+        .problem-content pre {
+            background: #2d2d2d;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        
+        .code-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        
+        .editor-header {
+            background: #2d2d2d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3e3e3e;
+        }
+        
+        .language-select {
+            background: #3e3e3e;
+            color: #d4d4d4;
+            border: 1px solid #3e3e3e;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .editor-container {
+            flex: 1;
+            background: #1e1e1e;
+            padding: 15px;
+            overflow: auto;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 100%;
+            background: #1e1e1e;
+            color: #9cdcfe;
+            border: none;
+            outline: none;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: none;
+            tab-size: 4;
+        }
+        
+        .right-panel {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            background: #252526;
+        }
+        
+        .test-section {
+            padding: 20px;
+            border-bottom: 1px solid #3e3e3e;
+        }
+        
+        .test-section h3 {
+            color: #4ec9b0;
+            margin-bottom: 15px;
+        }
+        
+        .test-case {
+            background: #2d2d2d;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .test-header {
+            background: #3e3e3e;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .test-number {
+            font-weight: bold;
+        }
+        
+        .test-status {
+            font-size: 0.8rem;
+        }
+        
+        .test-content {
+            padding: 15px;
+            display: none;
+        }
+        
+        .test-content.show {
+            display: block;
+        }
+        
+        .test-label {
+            color: #6a9955;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+        
+        .test-data {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+        
+        .test-data.match {
+            border-left: 3px solid #4ec9b0;
+        }
+        
+        .test-data.fail {
+            border-left: 3px solid #f14c4c;
+        }
+        
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .output-section h3 {
+            color: #4ec9b0;
+            margin-bottom: 15px;
+        }
+        
+        .output-box {
+            background: #1e1e1e;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+        
+        .output-error {
+            color: #f14c4c;
+        }
+        
+        .output-success {
+            color: #4ec9b0;
+        }
+        
+        .action-buttons {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #3e3e3e;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #0e639c;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1177bb;
+        }
+        
+        .btn-secondary {
+            background: #3e3e3e;
+            color: #d4d4d4;
+        }
+        
+        .btn-secondary:hover {
+            background: #4e4e4e;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #3e3e3e;
+            border-top: 3px solid #569cd6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .summary {
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .summary-pass {
+            color: #4ec9b0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .summary-fail {
+            color: #f14c4c;
+        }
+        
+        .custom-tests {
+            padding: 20px;
+            border-top: 1px solid #3e3e3e;
+        }
+        
+        .custom-tests h4 {
+            color: #569cd6;
+            margin-bottom: 10px;
+        }
+        
+        .add-test-btn {
+            width: 100%;
+            padding: 10px;
+            background: #3e3e3e;
+            border: 1px dashed #6a9955;
+            color: #6a9955;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .add-test-btn:hover {
+            background: #3e3e3e;
+            border-color: #4ec9b0;
+            color: #4ec9b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>C++ Compiler</h1>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>Ready</span>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="problem-section">
+                <div class="problem-title">Two Sum</div>
+                <div class="problem-content">
+                    <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to target.</p>
+                    
+                    <h3>Input Format</h3>
+                    <pre>5 9
+1 2 3 4 5</pre>
+                    
+                    <h3>Output Format</h3>
+                    <pre>0 1</pre>
+                    
+                    <h3>Constraints</h3>
+                    <pre>2 <= nums.length <= 10^4
+-10^9 <= nums[i] <= 10^9</pre>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="editor-header">
+                    <span>Solution.cpp</span>
+                    <select class="language-select" id="language">
+                        <option value="cpp">C++</option>
+                    </select>
+                </div>
+                <div class="editor-container">
+                    <textarea id="code" placeholder="Write your C++ code here...">#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int n, target;
+    cin >> n >> target;
+    vector<int> nums(n);
+    for (int i = 0; i < n; i++) cin >> nums[i];
+    
+    unordered_map<int, int> mp;
+    for (int i = 0; i < n; i++) {
+        int complement = target - nums[i];
+        if (mp.count(complement)) {
+            cout << mp[complement] << " " << i << endl;
+            return 0;
+        }
+        mp[nums[i]] = i;
+    }
+    
+    return 0;
+}</textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="clearOutput()">Clear</button>
+                <button class="btn btn-primary" onclick="runTests()" id="runBtn">Run Tests</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div>Compiling and running...</div>
+            </div>
+            
+            <div class="output-section">
+                <h3>Output</h3>
+                <div class="output-box" id="output">
+                    Click "Run Tests" to execute your code.
+                </div>
+                
+                <div class="summary" id="summary" style="display: none;">
+                    <span class="summary-pass" id="summaryText"></span>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h3>Test Cases</h3>
+                <div id="testCases"></div>
+            </div>
+            
+            <div class="custom-tests">
+                <h4>Add Custom Test</h4>
+                <textarea id="customInput" placeholder="Input..." style="width:100%; height:60px; background:#1e1e1e; color:#d4d4d4; border:1px solid #3e3e3e; border-radius:5px; padding:10px; margin-bottom:10px;"></textarea>
+                <textarea id="customOutput" placeholder="Expected Output..." style="width:100%; height:60px; background:#1e1e1e; color:#d4d4d4; border:1px solid #3e3e3e; border-radius:5px; padding:10px;"></textarea>
+                <button class="add-test-btn" onclick="addCustomTest()">+ Add Test Case</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let testCases = [
+            { input: "5 9\n1 2 3 4 5", expected: "0 1" },
+            { input: "4 6\n2 4 11 15", expected: "0 1" },
+            { input: "3 6\n3 2 4", expected: "1 2" }
+        ];
+        
+        function renderTests() {
+            const container = document.getElementById('testCases');
+            container.innerHTML = testCases.map((test, i) => `
+                <div class="test-case">
+                    <div class="test-header" onclick="toggleTest(${i})">
+                        <span class="test-number">Test Case ${i + 1}</span>
+                        <span class="test-status" id="status${i}">-</span>
+                    </div>
+                    <div class="test-content" id="content${i}">
+                        <div class="test-label">Input:</div>
+                        <div class="test-data">${test.input}</div>
+                        <div class="test-label">Expected:</div>
+                        <div class="test-data">${test.expected}</div>
+                        <div class="test-label">Output:</div>
+                        <div class="test-data" id="actual${i}">-</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function toggleTest(i) {
+            const content = document.getElementById(`content${i}`);
+            content.classList.toggle('show');
+        }
+        
+        function addCustomTest() {
+            const input = document.getElementById('customInput').value.trim();
+            const output = document.getElementById('customOutput').value.trim();
+            
+            if (input && output) {
+                testCases.push({ input, expected: output });
+                renderTests();
+                document.getElementById('customInput').value = '';
+                document.getElementById('customOutput').value = '';
+            }
+        }
+        
+        async function runTests() {
+            const code = document.getElementById('code').value;
+            const btn = document.getElementById('runBtn');
+            const loading = document.getElementById('loading');
+            const output = document.getElementById('output');
+            const summary = document.getElementById('summary');
+            
+            btn.disabled = true;
+            loading.style.display = 'block';
+            output.innerHTML = 'Compiling...';
+            summary.style.display = 'none';
+            
+            try {
+                const response = await fetch('/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        code: code,
+                        test_cases: testCases,
+                        language: 'cpp'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                loading.style.display = 'none';
+                
+                if (result.compiled) {
+                    let outputHtml = '';
+                    let passCount = 0;
+                    
+                    result.results.forEach((r, i) => {
+                        const statusEl = document.getElementById(`status${i}`);
+                        const actualEl = document.getElementById(`actual${i}`);
+                        
+                        if (r.passed) {
+                            statusEl.innerHTML = '<span style="color:#4ec9b0">PASS</span>';
+                            statusEl.parentElement.style.borderLeft = '3px solid #4ec9b0';
+                            passCount++;
+                        } else {
+                            statusEl.innerHTML = '<span style="color:#f14c4c">FAIL</span>';
+                            statusEl.parentElement.style.borderLeft = '3px solid #f14c4c';
+                        }
+                        
+                        const actualDiv = document.getElementById(`actual${i}`);
+                        actualDiv.innerText = r.actual || '(no output)';
+                        actualDiv.className = 'test-data' + (r.passed ? ' match' : ' fail');
+                    });
+                    
+                    output.innerHTML = `<span class="output-success">Compiled successfully!</span>\nExecution time: ${result.time}`;
+                    
+                    summary.style.display = 'block';
+                    const summaryText = document.getElementById('summaryText');
+                    summaryText.innerHTML = `${passCount}/${result.total} Tests Passed`;
+                    summaryText.className = passCount === result.total ? 'summary-pass' : 'summary-fail';
+                    
+                } else {
+                    output.innerHTML = `<span class="output-error">Compilation Error:</span>\n${result.compile_error}`;
+                }
+                
+            } catch (error) {
+                loading.style.display = 'none';
+                output.innerHTML = `<span class="output-error">Error:</span> ${error.message}`;
+            }
+            
+            btn.disabled = false;
+        }
+        
+        function clearOutput() {
+            document.getElementById('output').innerHTML = 'Click "Run Tests" to execute your code.';
+            document.getElementById('summary').style.display = 'none';
+            
+            testCases.forEach((_, i) => {
+                const statusEl = document.getElementById(`status${i}`);
+                const actualEl = document.getElementById(`actual${i}`);
+                if (statusEl) {
+                    statusEl.innerHTML = '-';
+                    statusEl.parentElement.style.borderLeft = 'none';
+                }
+                if (actualEl) {
+                    actualEl.innerText = '-';
+                    actualEl.className = 'test-data';
+                }
+            });
+        }
+        
+        renderTests();
+    </script>
+</body>
+</html>

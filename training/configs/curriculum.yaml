@@ -1,0 +1,15 @@
+stages:
+  - name: "reasoning_bootstrap"
+    epochs: 1
+    task_mix:
+      SFT_SOLVE: 0.55
+      PLAN_ONLY: 0.20
+      REPAIR: 0.15
+      OPTIMIZE: 0.10
+  - name: "debug_and_optimize"
+    epochs: 1
+    task_mix:
+      SFT_SOLVE: 0.40
+      PLAN_ONLY: 0.20
+      REPAIR: 0.20
+      OPTIMIZE: 0.20

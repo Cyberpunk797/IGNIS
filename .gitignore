@@ -1,0 +1,56 @@
+# Large model files
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ggml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+
+# Logs
+*.log
+logs/
+runs/
+
+# Output files
+*.csv
+results/*.json
+results/*.jsonl
+!results/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Julia (if used)
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
