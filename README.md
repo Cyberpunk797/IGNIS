@@ -1,12 +1,15 @@
-# IGNIS
+# AxLu-ZeSi CP
 
-Self-Verifying Competitive Programming AI - Fine-tuned on Qwen2.5 for competitive programming problem solving with automatic self-correction.
+C++ Competitive Programming Reasoning Model - Fine-tuned on Qwen2.5 for competitive programming problem solving with structured reasoning.
 
 ## Overview
 
-IGNIS is a next-gen competitive programming assistant that generates, executes, and iteratively repairs C++ solutions using a fine-tuned Qwen2.5-3B model.
-
-Unlike standard LLMs, IGNIS does not return the first answer. It runs code against test cases, detects failures, and attempts automatic fixes before producing a final solution.
+This project fine-tunes Qwen2.5 for C++ competitive programming tasks. The model generates:
+- Algorithm plan and reasoning
+- Correctness/invariant analysis
+- Edge case handling
+- Time and space complexity
+- Clean, compilable C++17 code
 
 ## Quick Start
 
@@ -19,7 +22,7 @@ Unlike standard LLMs, IGNIS does not return the first answer. It runs code again
 
 ```bash
 # 1. Install Python dependencies
-cd evaluation
+cd axlu-zesi-cp/evaluation
 pip install -r requirements.txt
 
 # 2. Load model in LM Studio
@@ -28,66 +31,131 @@ pip install -r requirements.txt
 # - Start server (Developer > Local Server)
 
 # 3. Run evaluation
-cd evaluation
-python run_pass_at_k.py
+cd axlu-zesi-cp/evaluation
+python run.py --problems 50
 ```
 
-## Features
+## True Server-Side Judge (No Local g++)
 
-- **Self-Verification Loop**: Generates solution → Tests it → Repairs if failed (up to 3 attempts)
-- **Multi-attempt Solution Generation**: Pass@1, Pass@2, Pass@3 metrics
-- **Built-in Compilation & Execution**: C++17 support with g++
-- **LeetCode-Style Web Interface**: Dark theme with instant execution
-- **50+ Practice Problems**: Arrays, Graphs, DP, Strings, etc.
+LeetCode-style platforms compile and run submissions on their own servers. This repo can do the same by running the
+included judge service on a server that has Docker installed.
+
+### Start the Judge on a Server
+
+On the judge machine (Linux VM recommended):
+
+```bash
+cd axlu-zesi-cp
+pip install -r judge/requirements.txt
+export JUDGE_API_KEY="change-me"   # optional but strongly recommended
+uvicorn judge.server:app --host 0.0.0.0 --port 8000
+```
+
+### Point the Web App at the Judge
+
+On any machine running the UI:
+
+```bash
+export IGNIS_JUDGE_URL="http://<judge-host>:8000"
+export IGNIS_JUDGE_API_KEY="change-me"  # if the judge requires it
+```
+
+Security note: a judge executes untrusted code. Keep it private (VPN/firewall), use an API key, and sandbox with Docker.
 
 ## Project Structure
 
 ```
-ignis/
-├── app/                   # Flask web app
-│   ├── main_app.py       # Backend server
-│   └── templates/        # HTML templates
+axlu-zesi-cp/
+├── architecture/          # Design documents
+├── dataset/              # Training data
+│   ├── build/            # Processed datasets
+│   ├── raw/              # Raw problems
+│   ├── schema/           # Data schemas
+│   └── tools/            # Dataset utilities
 ├── evaluation/           # Evaluation harness
-│   ├── client.py        # LM Studio API
-│   ├── compiler.py      # C++ compilation
-│   ├── harness.py       # Evaluation pipeline
-│   ├── grader.py        # Pass@K metrics
-│   └── results/         # Evaluation outputs
-├── dataset/             # Training data
-├── training/           # QLoRA fine-tuning configs
-├── judge/              # Docker judge server
-└── libs/               # Shared utilities
+│   ├── client.py         # LM Studio API
+│   ├── compiler.py       # C++ compilation
+│   ├── harness.py        # Evaluation pipeline
+│   ├── grader.py         # Pass@K metrics
+│   └── results/          # Evaluation outputs
+├── training/            # Training configs
+│   ├── configs/         # QLoRA configs
+│   └── scripts/         # Training scripts
+├── app/                 # Inference app
+└── libs/                # Shared libraries
 ```
+
+## Model Details
+
+| Property | Value |
+|----------|-------|
+| Base Model | Qwen2.5-3B/7B |
+| Fine-tuning | QLoRA (4-bit NF4) |
+| Format | GGUF |
+| Language | C++17 only |
 
 ## Performance
 
-### Evaluation Results (20 problems, 3 attempts max)
+### Test Results (50 problems, Pass@1)
 
 | Metric | Score |
 |--------|-------|
-| **Pass@1** | 50% |
-| **Pass@2** | 60% |
-| **Pass@3** | 70% |
-| Compilation Rate | 90% |
-| Reasoning Quality | 98% |
+| Pass Rate | 40% |
+| Compile Rate | 72% |
+| Reasoning Quality | 97.5% |
 
-### How Self-Verification Helps
+### Topic Performance
 
-| Attempts | Improvement |
-|----------|-------------|
-| 1 → 2 | +10% |
-| 2 → 3 | +10% |
+**Strong (100%):**
+- Prefix sums, Difference arrays
+- Two pointers, Deque
+- DSU (Disjoint Set Union)
+- Binary search
 
-The self-repair loop significantly improves success rates!
+**Needs Improvement (0%):**
+- Arrays (basic)
+- BFS/Graphs
+- DP problems
+- Bitmask
 
-## Stack
+## Evaluation
 
-- **Python** - Backend & evaluation
-- **Flask** - Web framework
-- **C++17** - Code execution
-- **QLoRA** - Fine-tuning
-- **Qwen2.5-3B** - Base model
-- **LM Studio** - Local inference
+### Run Full Evaluation
+```bash
+cd evaluation
+python run.py --problems 50 --max-attempts 3
+```
+
+### Compare with Baseline
+```bash
+# Load original Qwen in LM Studio first
+python compare_models.py --problems 20
+```
+
+### Evaluation Metrics
+- **Pass@K**: Correct within K attempts
+- **Compilation Rate**: % of responses that compile
+- **Reasoning Score**: Quality of reasoning output
+
+## Training
+
+### Dataset
+- 50 problems (currently)
+- Task types: SFT_SOLVE, PLAN_ONLY, REPAIR, OPTIMIZE
+- Difficulty: Fast (900-1200), Medium (1200-1600), High (1600+)
+
+### Recommended Improvements
+1. Expand dataset to 1000+ problems
+2. Add more test cases per problem
+3. Balance problem distribution
+4. Add DP and graph problems
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add problems or improve evaluation
+4. Submit a pull request
 
 ## License
 

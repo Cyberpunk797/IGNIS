@@ -1,6 +1,6 @@
 """
-IGNIS - Self-Verifying Competitive Programming AI
-Main application with AI-powered problem solving and self-verification.
+AxLu-ZeSi CP - C++ Competitive Programming Reasoning Model
+Fine-tuned on Qwen2.5 for competitive programming problem solving.
 """
 
 import sys

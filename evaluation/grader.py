@@ -42,8 +42,8 @@ class EvaluationMetrics:
     solved_count: int
     
     pass_at_1: float
-    pass_at_2: float
-    pass_at_3: float
+    pass_at_5: float
+    pass_at_10: float
     
     compilation_rate: float
     avg_tests_passed: float
@@ -72,8 +72,8 @@ def compute_metrics(results: List[ProblemResult]) -> EvaluationMetrics:
             total_problems=0,
             solved_count=0,
             pass_at_1=0.0,
-            pass_at_2=0.0,
-            pass_at_3=0.0,
+            pass_at_5=0.0,
+            pass_at_10=0.0,
             compilation_rate=0.0,
             avg_tests_passed=0.0,
             avg_reasoning_score=0.0,
@@ -104,8 +104,8 @@ def compute_metrics(results: List[ProblemResult]) -> EvaluationMetrics:
         total_problems=total,
         solved_count=solved,
         pass_at_1=compute_pass_at_k(results, 1),
-        pass_at_2=compute_pass_at_k(results, 2),
-        pass_at_3=compute_pass_at_k(results, 3),
+        pass_at_5=compute_pass_at_k(results, 5),
+        pass_at_10=compute_pass_at_k(results, 10),
         compilation_rate=compiled / total,
         avg_tests_passed=avg_tests,
         avg_reasoning_score=avg_reasoning,
@@ -130,8 +130,8 @@ def _group_by(results: List[ProblemResult], key: str) -> Dict[str, Dict]:
         name: {
             "count": len(items),
             "pass_at_1": compute_pass_at_k(items, 1),
-            "pass_at_2": compute_pass_at_k(items, 2),
-            "pass_at_3": compute_pass_at_k(items, 3),
+            "pass_at_5": compute_pass_at_k(items, 5),
+            "pass_at_10": compute_pass_at_k(items, 10),
         }
         for name, items in groups.items()
     }
@@ -182,9 +182,9 @@ def format_metrics_text(metrics: EvaluationMetrics, model_name: str = "Unknown")
         "-" * 40,
         "OVERALL RESULTS",
         "-" * 40,
-        f"Pass@1:  {metrics.pass_at_1:.1%}  (first attempt)",
-        f"Pass@2:  {metrics.pass_at_2:.1%}  (within 2 attempts)",
-        f"Pass@3:  {metrics.pass_at_3:.1%}  (within 3 attempts)",
+        f"Pass@1:  {metrics.pass_at_1:.1%}",
+        f"Pass@5:  {metrics.pass_at_5:.1%}",
+        f"Pass@10: {metrics.pass_at_10:.1%}",
         f"",
         f"Compilation Rate: {metrics.compilation_rate:.1%}",
         f"Avg Tests Passed: {metrics.avg_tests_passed:.1%}",
